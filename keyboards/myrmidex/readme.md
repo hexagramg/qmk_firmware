@@ -1,5 +1,6 @@
 # myrmidex
-I will insert Image later, I swear
+
+![keeb](https://live.staticflickr.com/65535/51756809526_140cf8454c_k.jpg)
 
 
 7*3 split keyboard with two encoders above the thumb cluster, agressive pinky stagger and pads for power switch and battery. This keyboard is a mix of jorne and kyria keyboards. 

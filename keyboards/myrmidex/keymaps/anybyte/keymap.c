@@ -120,9 +120,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         } else {
             if (!is_alt_tab_active) {
                 register_code(KC_LALT);
+                // Fix Alt+Shift+Tab not showing on Mac
                 tap_code16(KC_TAB);
             }
-        tap_code16(S(KC_TAB));
+            tap_code16(S(KC_TAB));
         }
         if (!is_alt_tab_active) {
             is_alt_tab_active = true;

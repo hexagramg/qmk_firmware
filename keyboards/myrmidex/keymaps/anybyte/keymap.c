@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|---------+---------+---------+---------+---------+---------+---------|                                                         |---------+---------+---------+---------+---------+---------+---------|
                   KC_ENT  , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    ,                                                           KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_BSPC ,\
               //|---------+---------+---------+---------+---------+---------+---------+---------|                 |---------+---------+---------+---------+---------+---------+---------+---------|
-                                                KC_APP  , KC_NO   , KC_LALT , NAV     , KC_LSFT ,   KC_NO,KC_NO   , KC_SPC  , SYM     , KC_RGUI , KC_NO   , GAMING  \
+                                                GAMING  , KC_RGUI , KC_LALT , NAV     , KC_LSFT ,   KC_NO,KC_NO   , KC_SPC  , SYM     , KC_RGUI , KC_NO   , KC_APP  \
                                             //`-------------------------------------------------'                 `-------------------------------------------------'
     ),
 /*
@@ -100,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|---------+---------+---------+---------+---------+---------+---------|                                                         |---------+---------+---------+---------+---------+---------+---------|
                   KC_J    , KC_TRNS , KC_7    , KC_8    , KC_9    , KC_0    ,                                                           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_TRNS ,\
               //|---------+---------+---------+---------+---------+---------+---------+---------|                 |---------+---------+---------+---------+---------+---------+---------+---------|
-                                                KC_TRNS , KC_TRNS , KC_LGUI , KC_TRNS , KC_TRNS , KC_TRNS,KC_TRNS , NAV     , KC_TRNS , KC_TRNS , KC_TRNS , RESET   \
+                                                RESET   , KC_TRNS , KC_LGUI , KC_TRNS , KC_TRNS , KC_TRNS,KC_TRNS , NAV     , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS \
                                             //`-------------------------------------------------'                 `-------------------------------------------------'
     )
 };
@@ -144,7 +144,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 void matrix_scan_user(void) {
   if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 350) {
+    if (timer_elapsed(alt_tab_timer) > 500) {
       unregister_code(KC_LALT);
       is_alt_tab_active = false;
     }

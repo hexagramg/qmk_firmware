@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|---------+---------+---------+---------+---------+---------+---------|                                                          |---------+---------+---------+---------+---------+---------+---------|
         KC_TRNS , KC_TRNS , KC_0    , KC_4    , KC_5    , KC_6    , KC_INS  ,                                                            KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, KC_TRNS , KC_TRNS , KC_TRNS ,\
     //|---------+---------+---------+---------+---------+---------+---------|                                                          |---------+---------+---------+---------+---------+---------+---------|
-                  KC_TRNS , KC_NO   , KC_1    , KC_2    , KC_3    , RESET   ,                                                            KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12 ,\
+                  KC_TRNS , KC_NO   , KC_1    , KC_2    , KC_3    , KC_NO   ,                                                            KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12 ,\
               //|---------+---------+---------+---------+---------+---------+---------+---------|                  |---------+---------+---------+---------+---------+---------+---------+---------|
                                                 KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS,KC_TRNS  , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS \
                                             //`-------------------------------------------------'                  `-------------------------------------------------'
@@ -108,30 +108,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
-
+    // Left encoder
     if (index == 0) {
-        // Volume control
+        // Alt+Tab
+        alt_tab_timer = timer_read();
         if (clockwise) {
             if (!is_alt_tab_active) {
-               is_alt_tab_active = true;
-               register_code(KC_LALT);
+                register_code(KC_LALT);
             }
-            alt_tab_timer = timer_read();
             tap_code16(KC_TAB);
-            } else {
-            if (!is_alt_tab_active) {
-               is_alt_tab_active = true;
-               register_code(KC_LALT);
-            }
-            alt_tab_timer = timer_read();
-            tap_code16(S(KC_TAB));
-            }
-    } else if (index == 1) {
-        // Page up/Page down
-        if (!clockwise) {
-            tap_code(KC_PGDN);
         } else {
-            tap_code(KC_PGUP);
+            if (!is_alt_tab_active) {
+                register_code(KC_LALT);
+                tap_code16(KC_TAB);
+            }
+        tap_code16(S(KC_TAB));
+        }
+        if (!is_alt_tab_active) {
+            is_alt_tab_active = true;
+        }
+    // Right encoder
+    } else if (index == 1) {
+        // Volume control
+        if (clockwise) {
+            tap_code(KC__VOLDOWN);
+        } else {
+            tap_code(KC__VOLUP);
         }
     }
     return false;
@@ -141,7 +143,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 void matrix_scan_user(void) {
   if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 750) {
+    if (timer_elapsed(alt_tab_timer) > 350) {
       unregister_code(KC_LALT);
       is_alt_tab_active = false;
     }
